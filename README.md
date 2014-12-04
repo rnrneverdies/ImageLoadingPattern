@@ -1,5 +1,5 @@
-ImageLoadingPattern
-===================
+Image Loading Pattern
+=====================
 
 Google's Design Guidelines - Loading Images Patterns
 
