@@ -1,7 +1,7 @@
 Image Loading Pattern
 =====================
 
-Google's Design Guidelines - Loading Images Patterns
+Google's Design Guidelines - Loading Images Pattern
 
 http://www.google.com/design/spec/patterns/loading-images.html
 
