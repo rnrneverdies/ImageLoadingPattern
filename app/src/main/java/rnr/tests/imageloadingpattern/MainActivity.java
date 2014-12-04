@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.res.Resources;
+import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -30,7 +31,6 @@ public class MainActivity extends Activity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -59,18 +59,42 @@ public class MainActivity extends Activity {
         final BitmapDrawable drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.image);
         imageView.setImageDrawable(drawable);
         AlphaSatColorMatrixEvaluator evaluator = new AlphaSatColorMatrixEvaluator ();
-        final ColorMatrixColorFilter filter = new ColorMatrixColorFilter(evaluator.getColorMatrix());
-        drawable.setColorFilter(filter);
+        final AnimateColorMatrixColorFilter filter = new AnimateColorMatrixColorFilter(evaluator.getColorMatrix());
+        drawable.setColorFilter(filter.getColorFilter());
 
         ObjectAnimator animator = ObjectAnimator.ofObject(filter, "colorMatrix", evaluator,
                 evaluator.getColorMatrix());
         animator.addUpdateListener( new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                drawable.setColorFilter (filter);
+                drawable.setColorFilter (filter.getColorFilter());
             }
         });
         animator.setDuration(1500);
         animator.start();
+    }
+
+    /// Thanks to @DavidCrawford \
+    /// see http://stackoverflow.com/a/27301389/2573335
+    private class AnimateColorMatrixColorFilter {
+        private ColorMatrixColorFilter mFilter;
+        private ColorMatrix mMatrix;
+
+        public AnimateColorMatrixColorFilter(ColorMatrix matrix) {
+            setColorMatrix(matrix);
+        }
+
+        public ColorMatrixColorFilter getColorFilter() {
+            return mFilter;
+        }
+
+        public void setColorMatrix(ColorMatrix matrix) {
+            mMatrix = matrix;
+            mFilter = new ColorMatrixColorFilter(matrix);
+        }
+
+        public ColorMatrix getColorMatrix() {
+            return mMatrix;
+        }
     }
 }
