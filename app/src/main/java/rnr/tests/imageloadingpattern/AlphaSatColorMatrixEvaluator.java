@@ -22,7 +22,8 @@ public class AlphaSatColorMatrixEvaluator implements TypeEvaluator {
 
         // Compute the alpha change over period [0, 2]
         float alpha = Math.min(phase, 2f) / 2f;
-        elements [19] = (float)Math.round(alpha * 255);
+        //elements [19] = (float)Math.round(alpha * 255);
+        elements [18] = alpha;
 
         // We substract to make the picture look darker, it will automatically clamp
         // This is spread over period [0, 2.5]
